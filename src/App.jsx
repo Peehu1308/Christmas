@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Landing from './screens/landing.jsx';
 import Game from './screens/Game.jsx';
 import './App.css';
@@ -13,19 +14,22 @@ import WrapUpCard from './screens/card.jsx';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/game" element={<Game />} />
-      <Route path="/gamelanding" element={<Gamelanding />} />
-      <Route path="/result" element={<Result />} />
+    <>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/game" element={<Game />} />
+        <Route path="/gamelanding" element={<Gamelanding />} />
+        <Route path="/result" element={<Result />} />
 
-      <Route path="/santagame" element={<SantaGame />} />
-      <Route path="/lobby" element={<Lobby />} />
-      <Route path="/decision" element={<Decision />} />
-      <Route path="/giftsuggestions" element={<GiftSuggestions />} />
-      <Route path="/card" element={<WrapUpCard />} />
+        <Route path="/santagame" element={<SantaGame />} />
+        <Route path="/lobby" element={<Lobby />} />
+        <Route path="/decision" element={<Decision />} />
+        <Route path="/giftsuggestions" element={<GiftSuggestions />} />
+        <Route path="/card" element={<WrapUpCard />} />
 
-    </Routes>
+      </Routes>
+      <Analytics />
+    </>
   );
 }
 
