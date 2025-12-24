@@ -59,7 +59,7 @@ const Landing = () => {
       score: {
         "Forgive him ❤️": 3,
         "Laugh it off 😂": 2,
-        "Steal his hat 🎅": 1,
+        "Steal his hat 🎅": -1,
         "Report him 😤": -1
       }
     }
