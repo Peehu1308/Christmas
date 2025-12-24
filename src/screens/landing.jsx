@@ -1,92 +1,74 @@
-import React, { useState, useRef } from 'react';
-import santa from '../assets/santa.png';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef } from "react";
+import santa from "../assets/santa.png";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
   const navigate = useNavigate();
-  const [questions, setquestions] = useState(false);
-  const [currentindex, setcurrentindex] = useState(0);
-  const [answers, setanswers] = useState({});
-  const [score, setscore] = useState(0);
-  const [finished, setfinished] = useState(false);
+  const [questions, setQuestions] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
 
-  // Generate snowflakes once
+  /* ❄️ Snowflakes (generated once) */
   const snowflakesRef = useRef(
-    Array.from({ length: 60 }).map(() => ({
-      size: Math.random() * 6 + 5,
+    Array.from({ length: 50 }).map(() => ({
+      size: Math.random() * 5 + 4,
       left: Math.random() * 100,
-      duration: Math.random() * 5 + 5,
+      duration: Math.random() * 6 + 6,
       delay: Math.random() * 5,
-      color: Math.random() > 0.5 ? 'white' : 'white', // red or green flakes
+      color: "white",
     }))
   );
 
   const santaQuestions = [
-    {
-      id: 1,
-      question: "How do you celebrate Christmas?",
-      options: ["Family dinner", "Friends party", "Traveling", "Quiet at home"],
-      key: "celebration",
-      score: {
-        "Family dinner": 2,
-        "Friends party": 1,
-        "Traveling": 1,
-        "Quiet at home": 2
-      }
-    },
-    {
-      id: 2,
-      question: "What’s your budget range?",
-      options: ["Under ₹500", "₹500–₹2000", "₹2000+"],
-      key: "budget"
-    },
-    {
-      id: 3,
-      question: "Do you prefer fun or practical gifts?",
-      options: ["Fun 🎉", "Practical 🎁", "Both 😄"],
-      key: "giftType"
-    },
-    {
-      id: 4,
-      question: "What would you do if Santa stole your cookies?",
-      options: [
-        "Forgive him ❤️",
-        "Steal his hat 🎅",
-        "Report him 😤",
-        "Laugh it off 😂"
-      ],
-      key: "personality",
-      score: {
-        "Forgive him ❤️": 3,
-        "Laugh it off 😂": 2,
-        "Steal his hat 🎅": -1,
-        "Report him 😤": -1
-      }
+  {
+    question: "Do you share gifts with friends?",
+    options: ["Yes", "No"],
+    key: "sharing",
+    score: {
+      Yes: 2,
+      No: -2   // now choosing No reduces score significantly
     }
-  ];
+  },
+  {
+    question: "What would you do if Santa stole your cookies?",
+    options: [
+      "Forgive him ❤️",
+      "Steal his hat 🎅",
+      "Report him 😤",
+      "Laugh it off 😂"
+    ],
+    key: "personality",
+    score: {
+      "Forgive him ❤️": 3,
+      "Laugh it off 😂": 2,
+      "Steal his hat 🎅": -3,  // more negative
+      "Report him 😤": -3      // more negative
+    }
+  }
+];
 
-  const currentquestion = santaQuestions[currentindex];
 
-  const handleAnswer = (selectedOption) => {
-    const q = santaQuestions[currentindex];
+  const currentQuestion = santaQuestions[currentIndex];
 
-    setanswers((prev) => ({
-      ...prev,
-      [q.key]: selectedOption
-    }));
+  const handleAnswer = (option) => {
+    const q = santaQuestions[currentIndex];
 
-    if (q.score && q.score[selectedOption] !== undefined) {
-      setscore((prev) => prev + q.score[selectedOption]);
+    setAnswers((prev) => ({ ...prev, [q.key]: option }));
+
+    if (q.score?.[option]) {
+      setScore((prev) => prev + q.score[option]);
     }
 
-    if (currentindex < santaQuestions.length - 1) {
-      setcurrentindex((prev) => prev + 1);
+    if (currentIndex < santaQuestions.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
     } else {
-      setfinished(true);
+      setFinished(true);
     }
   };
 
-  const getSantaVerdict = (score) => {
+  const verdict = () => {
     if (score >= 5) return "🎁 Very Nice";
     if (score >= 2) return "🙂 Nice";
     if (score >= 0) return "😐 Neutral";
@@ -95,102 +77,99 @@ const Landing = () => {
 
   return (
     <>
-      {/* Snowflakes */}
-<div className="fixed top-0 left-0 w-full h-full pointer-events-none z-50 overflow-hidden">
-  {snowflakesRef.current.map((flake, i) => (
-    <div
-      key={i}
-      className="absolute rounded-full opacity-70 animate-fall"
-      style={{
-        width: `${flake.size}px`,
-        height: `${flake.size}px`,
-        left: `${flake.left}%`,
-        backgroundColor: flake.color,
-        animationDelay: `${flake.delay}s`,
-        animationDuration: `${flake.duration}s`,
-      }}
-    />
-  ))}
-</div>
+      {/* ❄️ Snow */}
+      <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
+        {snowflakesRef.current.map((flake, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full animate-fall opacity-70"
+            style={{
+              width: flake.size,
+              height: flake.size,
+              left: `${flake.left}%`,
+              backgroundColor: flake.color,
+              animationDelay: `${flake.delay}s`,
+              animationDuration: `${flake.duration}s`,
+            }}
+          />
+        ))}
+      </div>
 
-
+      {/* 🌟 ENTRY SCREEN */}
       {!questions && (
-        <div className="bg-red-800 h-screen flex flex-col justify-center items-center text-white relative">
-          <img src={santa} height={300} width={300} className="mb-6" />
-          <p className="text-3xl font-bold italic p-10 text-center">
-            Ho ho ho! Welcome to SantaVerse. Ready for some Christmas fun?
+        <div className="min-h-screen bg-gradient-to-b from-red-900 to-red-700 flex flex-col items-center justify-center text-white px-6 text-center">
+          <img src={santa} className="w-56 mb-6 drop-shadow-xl" />
+          <h1 className="text-3xl font-extrabold mb-4">
+            Ho Ho Ho! 🎄
+          </h1>
+          <p className="text-lg opacity-90 mb-8 max-w-md">
+            Welcome to SantaVerse. Answer a few fun questions and let Santa
+            decide your Christmas fate!
           </p>
 
           <button
-            className="bg-white text-red-800 font-bold py-2 px-4 rounded
-                       hover:bg-red-800 hover:text-white hover:border-white hover:border-2 transition"
-            onClick={() => setquestions(true)}
+            onClick={() => setQuestions(true)}
+            className="bg-white text-red-800 font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition"
           >
-            Enter SantaVerse
+            Enter SantaVerse 🎅
           </button>
         </div>
       )}
 
+      {/* 🎅 QUESTION SCREEN */}
       {questions && !finished && (
-        <div className="bg-gradient-to-b from-red-900 to-red-700 h-screen flex flex-col justify-end text-white px-4 pb-10 items-center relative">
-          <img src={santa} height={250} width={250} className="top-3 mb-4 animate-shake" />
-          <div className="flex items-start mb-4 max-w-md mx-auto">
-            <div className="text-4xl mr-3">🎅</div>
-            <div className="bg-white text-red-800 p-4 rounded-2xl rounded-tl-none shadow-lg">
-              <p className="font-semibold">
-                {currentquestion.question}
-              </p>
-            </div>
+        <div className="min-h-screen bg-gradient-to-b from-red-900 to-red-700 flex flex-col justify-end px-4 pb-10 text-white">
+          <img
+            src={santa}
+            className="w-44 mx-auto mb-6 animate-bounce"
+          />
+
+          <div className="bg-white/95 text-red-800 rounded-3xl p-5 shadow-xl max-w-md mx-auto mb-6">
+            <p className="font-semibold text-center">
+              {currentQuestion.question}
+            </p>
           </div>
 
-          {/* Options as Quick Reply Buttons */}
           <div className="space-y-3 max-w-md mx-auto w-full">
-            {currentquestion.options.map((option) => (
+            {currentQuestion.options.map((option) => (
               <button
                 key={option}
                 onClick={() => handleAnswer(option)}
-                className="
-                  w-full bg-white text-red-800 font-semibold py-3 px-4
-                  rounded-full shadow-md
-                  hover:bg-green-700 hover:text-white
-                  transition-all duration-200 active:scale-95
-                "
+                className="w-full bg-white text-red-800 py-3 rounded-full font-semibold shadow-md hover:bg-green-700 hover:text-white transition active:scale-95"
               >
                 {option}
               </button>
             ))}
           </div>
 
-          {/* Progress Indicator */}
           <p className="text-center text-sm opacity-70 mt-6">
-            Question {currentindex + 1} of {santaQuestions.length}
+            Question {currentIndex + 1} of {santaQuestions.length}
           </p>
         </div>
       )}
 
-      {/* RESULT SCREEN */}
+      {/* 🎄 RESULT SCREEN */}
       {finished && (
-        <div className="bg-red-800 h-screen flex flex-col justify-center items-center text-white relative">
-          <h1 className="text-4xl font-bold mb-4">
-            🎄 Santa’s Verdict
+        <div className="min-h-screen bg-gradient-to-b from-red-900 to-red-700 flex flex-col items-center justify-center text-white px-6 text-center">
+          <h1 className="text-4xl font-extrabold mb-4">
+            Santa’s Verdict 🎅
           </h1>
-          <p className="text-2xl mb-2">
-            {getSantaVerdict(score)}
-          </p>
+          <p className="text-2xl mb-8">{verdict()}</p>
+
           <button
-            className="bg-white text-red-800 font-bold py-2 px-4 rounded mt-6 hover:bg-red-800 hover:text-white hover:border-white hover:border-2 transition"
-            onClick={() => navigate('/decision')}
+            onClick={() => navigate("/decision")}
+            className="bg-white text-red-800 py-3 px-8 rounded-full font-bold shadow-lg hover:scale-105 transition"
           >
-            Go to the next page
+            Continue 🎁
           </button>
         </div>
       )}
 
-      {/* Tailwind Animations */}
+      {/* CSS Animations */}
       <style>{`
         @keyframes fall {
-          0% { transform: translateY(-10px); opacity: 0.7; }
-          100% { transform: translateY(100vh); opacity: 0; }
+          from { transform: translateY(-10vh); }
+          to { transform: translateY(110vh); }
         }
         .animate-fall {
           animation: fall linear infinite;
