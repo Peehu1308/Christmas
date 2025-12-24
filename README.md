@@ -9,11 +9,17 @@ Check it out here: [Santa Delivery Dash Live](https://christmas-flax-iota.vercel
 
 ✨ Features
 🎮 Interactive decision-based game
+
 🎅 Santa moves vertically as the game progresses
+
 ❄️ Falling snow animation (lightweight, CSS-based)
+
 📱 Ultra-compact mobile-friendly layout
+
 🌐 Fully responsive (desktop, tablet, mobile)
+
 🎁 Final result based on user choices (Nice / Neutral / Naughty)
+
 ⚡ Smooth animations & transitions
 
 🖼 Screenshots
@@ -73,37 +79,64 @@ Network: http://192.168.x.x:5173
 Open this URL on your phone or another device 📱💻.
 
 🎮 How to Play
+
 Start from the Decision Page
+
 Click Play Game
+
 Answer each Christmas-themed question
+
 Santa moves forward with each decision
+
 At the end, see if you’re Nice, Neutral, or Naughty 🎄
 
+
+
 ❄️ Snow Animation
+
 Snowflakes are randomized via useRef
+
 Custom CSS animation (@keyframes fall)
+
 Non-blocking layer using pointer-events-none
 
 📱 Mobile Experience
+
 Questions stay fixed at the bottom
+
 Santa road stays fully visible
+
 Buttons are thumb-friendly
+
 No overflow or hidden content issues
 
+
 🎨 Styling
+
 Tailwind utility classes
+
 Festive color palette:
+
 bg-red-800
+
 bg-green-800
+
 text-white
+
 Glassmorphism: bg-white/10 + backdrop-blur
 
 🧩 Possible Enhancements
+
 🔊 Sound effects (jingle bells, button clicks)
+
 🎁 Progress bar instead of question count
+
 🎉 Confetti animation for “Nice” results
+
 🌟 Santa celebration animation at the end
+
 🌍 Online multiplayer / leaderboard
+
 🤝 Contributing
 
 Contributions are welcome!
