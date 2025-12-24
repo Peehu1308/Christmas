@@ -1,4 +1,5 @@
 Santa Delivery Dash
+
 A fun, interactive Christmas-themed web game where users guide Santa by making moral choices — determining whether they’re Nice or Naughty 🎅❄️.
 Built with React + Tailwind CSS, featuring falling snow, animations, and a mobile-friendly game layout.
 
@@ -7,19 +8,12 @@ Check it out here: [Santa Delivery Dash Live](https://christmas-flax-iota.vercel
  🎮✨
 
 ✨ Features
-
 🎮 Interactive decision-based game
-
 🎅 Santa moves vertically as the game progresses
-
 ❄️ Falling snow animation (lightweight, CSS-based)
-
 📱 Ultra-compact mobile-friendly layout
-
 🌐 Fully responsive (desktop, tablet, mobile)
-
 🎁 Final result based on user choices (Nice / Neutral / Naughty)
-
 ⚡ Smooth animations & transitions
 
 🖼 Screenshots
